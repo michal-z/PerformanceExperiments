@@ -1,5 +1,5 @@
 # PerformanceExperiments
-CPU and GPU performance experiments for for educational purposes.
+CPU and GPU performance experiments for educational purposes.
 
 Ideas:
 - Push as much geometry as possible from CPU to GPU on each thread. Observe DRAM bandwidth.

@@ -2,7 +2,7 @@
 #include "DirectX12.h"
 
 
-#define ENABLE_DEBUG_LAYER 1
+#define ENABLE_DEBUG_LAYER 0
 
 DirectX12::~DirectX12()
 {

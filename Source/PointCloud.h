@@ -17,9 +17,11 @@ private:
 	ID3D12PipelineState* m_Pso;
 	ID3D12RootSignature* m_Rs;
 
-	static const uint32_t k_PointCount = 1000;
+	static constexpr uint32_t k_PointCount = 100000;
 	ID3D12Resource* m_PointVb;
+	void* m_PointVbCpuAddr;
 	D3D12_VERTEX_BUFFER_VIEW m_PointVbView;
+	eastl::vector<XMFLOAT2A> m_Points;
 
 	ID3D12Resource* m_RootCb[2];
 	void* m_RootCbCpuAddr[2];

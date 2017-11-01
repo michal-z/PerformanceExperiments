@@ -31,8 +31,8 @@
     <ClCompile Include="..\Source\Pch.cpp" />
     <ClCompile Include="..\Source\DirectX12.cpp" />
     <ClCompile Include="..\Source\Library.cpp" />
-    <ClCompile Include="..\Source\PerfExperiments.cpp" />
     <ClCompile Include="..\Source\PointCloud.cpp" />
+    <ClCompile Include="..\Source\PerformanceExperiments.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="External">

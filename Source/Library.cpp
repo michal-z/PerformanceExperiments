@@ -4,7 +4,7 @@
 
 eastl::vector<uint8_t> Lib::LoadFile(const char* fileName)
 {
-	FILE *file = fopen(fileName, "rb");
+	FILE* file = fopen(fileName, "rb");
 	assert(file);
 	fseek(file, 0, SEEK_END);
 	long size = ftell(file);

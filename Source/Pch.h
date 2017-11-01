@@ -13,4 +13,5 @@
 #include "tbb/tbb.h"
 #include "DirectXMath.h"
 #include "EASTL/vector.h"
+#include "ittnotify.h"
 using namespace DirectX;

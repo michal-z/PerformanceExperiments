@@ -1,7 +1,6 @@
 #include "Pch.h"
 #include "PointCloud.h"
 #include <random>
-#include "EASTL/random.h"
 #include "DirectX12.h"
 #include "Library.h"
 
@@ -10,8 +9,8 @@ void PointCloud::Initialize()
 {
 	m_Dx12.GetCmdList()->Close();
 
-	eastl::vector<uint8_t> csoVs = Lib::LoadFile("Assets/Shaders/PointCloudVS.cso");
-	eastl::vector<uint8_t> csoPs = Lib::LoadFile("Assets/Shaders/PointCloudPS.cso");
+	std::vector<uint8_t> csoVs = Lib::LoadFile("Assets/Shaders/PointCloudVS.cso");
+	std::vector<uint8_t> csoPs = Lib::LoadFile("Assets/Shaders/PointCloudPS.cso");
 
 	D3D12_INPUT_ELEMENT_DESC inputElements[] =
 	{
@@ -19,7 +18,7 @@ void PointCloud::Initialize()
 	};
 
 	D3D12_GRAPHICS_PIPELINE_STATE_DESC psoDesc = {};
-	psoDesc.InputLayout = { inputElements, (uint32_t)eastl::size(inputElements) };
+	psoDesc.InputLayout = { inputElements, (uint32_t)std::size(inputElements) };
 	psoDesc.VS = { csoVs.data(), csoVs.size() };
 	psoDesc.PS = { csoPs.data(), csoPs.size() };
 	psoDesc.RasterizerState.FillMode = D3D12_FILL_MODE_SOLID;

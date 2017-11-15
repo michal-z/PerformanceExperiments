@@ -1,25 +1,8 @@
 ﻿#include "Pch.h"
-#include "PointCloud.h"
+#include "Experiments/PointCloud/PointCloud.h"
 #include "DirectX12.h"
 #include "Library.h"
 
-//#define USE_PIX 1
-#include "pix3.h"
-#if defined(USE_PIX)
-#pragma comment(lib, "WinPixEventRuntime.lib")
-#endif
-
-void* operator new[](size_t size, const char * /*name*/, int /*flags*/, unsigned /*debugFlags*/,
-					 const char * /*file*/, int /*line*/)
-{
-	return malloc(size);
-}
-
-void* operator new[](size_t size, size_t alignment, size_t alignmentOffset, const char * /*name*/, int /*flags*/,
-					 unsigned /*debugFlags*/, const char * /*file*/, int /*line*/)
-{
-	return _aligned_offset_malloc(size, alignment, alignmentOffset);
-}
 
 static void UpdateFrameTime(HWND window, const char *windowText, double &o_Time, float &o_DeltaTime)
 {

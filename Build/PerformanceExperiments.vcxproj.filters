@@ -1,56 +1,37 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <ClCompile Include="..\Source\External\EASTL\source\assert.cpp">
-      <Filter>External\EASTL</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Source\External\EASTL\source\allocator_eastl.cpp">
-      <Filter>External\EASTL</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Source\External\EASTL\source\fixed_pool.cpp">
-      <Filter>External\EASTL</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Source\External\EASTL\source\hashtable.cpp">
-      <Filter>External\EASTL</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Source\External\EASTL\source\intrusive_list.cpp">
-      <Filter>External\EASTL</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Source\External\EASTL\source\numeric_limits.cpp">
-      <Filter>External\EASTL</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Source\External\EASTL\source\red_black_tree.cpp">
-      <Filter>External\EASTL</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Source\External\EASTL\source\string.cpp">
-      <Filter>External\EASTL</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Source\External\EASTL\source\thread_support.cpp">
-      <Filter>External\EASTL</Filter>
-    </ClCompile>
     <ClCompile Include="..\Source\Pch.cpp" />
     <ClCompile Include="..\Source\DirectX12.cpp" />
     <ClCompile Include="..\Source\Library.cpp" />
-    <ClCompile Include="..\Source\PointCloud.cpp" />
     <ClCompile Include="..\Source\PerformanceExperiments.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <Filter Include="External">
-      <UniqueIdentifier>{7dfab909-bddc-4e63-b845-57d91cb62adb}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="External\EASTL">
-      <UniqueIdentifier>{3d8f7ccf-ff88-4c49-85c2-6876bb512881}</UniqueIdentifier>
-    </Filter>
+    <ClCompile Include="..\Source\Experiments\PointCloud\PointCloud.cpp">
+      <Filter>Experiments\PointCloud</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Source\DirectX12.h" />
     <ClInclude Include="..\Source\Pch.h" />
     <ClInclude Include="..\Source\Library.h" />
     <ClInclude Include="..\Source\Experiment.h" />
-    <ClInclude Include="..\Source\PointCloud.h" />
+    <ClInclude Include="..\Source\Experiments\PointCloud\PointCloud.h">
+      <Filter>Experiments\PointCloud</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <FxCompile Include="..\Source\PointCloudPS.hlsl" />
-    <FxCompile Include="..\Source\PointCloudVS.hlsl" />
+    <FxCompile Include="..\Source\Experiments\PointCloud\PointCloudVS.hlsl">
+      <Filter>Experiments\PointCloud</Filter>
+    </FxCompile>
+    <FxCompile Include="..\Source\Experiments\PointCloud\PointCloudPS.hlsl">
+      <Filter>Experiments\PointCloud</Filter>
+    </FxCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Experiments">
+      <UniqueIdentifier>{5d97eb35-1f7d-4465-bca0-db0ec28a8f8b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Experiments\PointCloud">
+      <UniqueIdentifier>{7c3b2d94-b493-43cf-bf42-8301f781fe64}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
 </Project>

@@ -21,7 +21,7 @@ private:
 	ID3D12Resource* m_PointVb;
 	void* m_PointVbCpuAddr;
 	D3D12_VERTEX_BUFFER_VIEW m_PointVbView;
-	eastl::vector<XMFLOAT2A> m_Points;
+	std::vector<XMFLOAT2A> m_Points;
 
 	ID3D12Resource* m_RootCb[2];
 	void* m_RootCbCpuAddr[2];

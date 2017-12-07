@@ -49,18 +49,25 @@ sincos:
 
 ; in: ymm0,ymm1,ymm2 position
 ; out: ymm0 distance to the nearest object
-;falign
-;nearest_distance:
 macro nearest_distance {
-        VSUBPS ymm3, ymm0, [object.param_x+_0]
-        VSUBPS ymm6, ymm0, [object.param_x+_1]
-        VSUBPS ymm9, ymm0, [object.param_x+_2]
-        VSUBPS ymm4, ymm1, [object.param_y+_0]
-        VSUBPS ymm7, ymm1, [object.param_y+_1]
-        VSUBPS ymm10, ymm1, [object.param_y+_2]
-        VSUBPS ymm5, ymm2, [object.param_z+_0]
-        VSUBPS ymm8, ymm2, [object.param_z+_1]
-        VSUBPS ymm11, ymm2, [object.param_z+_2]
+        VBROADCASTSS ymm3, [object.param_x+0]
+        VBROADCASTSS ymm6, [object.param_x+4]
+        VBROADCASTSS ymm9, [object.param_x+8]
+        VBROADCASTSS ymm4, [object.param_y+0]
+        VBROADCASTSS ymm7, [object.param_y+4]
+        VBROADCASTSS ymm10, [object.param_y+8]
+        VBROADCASTSS ymm5, [object.param_z+0]
+        VBROADCASTSS ymm8, [object.param_z+4]
+        VBROADCASTSS ymm11, [object.param_z+8]
+        VSUBPS ymm3, ymm0, ymm3
+        VSUBPS ymm6, ymm0, ymm6
+        VSUBPS ymm9, ymm0, ymm9
+        VSUBPS ymm4, ymm1, ymm4
+        VSUBPS ymm7, ymm1, ymm7
+        VSUBPS ymm10, ymm1, ymm10
+        VSUBPS ymm5, ymm2, ymm5
+        VSUBPS ymm8, ymm2, ymm8
+        VSUBPS ymm11, ymm2, ymm11
         VMULPS ymm3, ymm3, ymm3
         VMULPS ymm6, ymm6, ymm6
         VMULPS ymm9, ymm9, ymm9
@@ -70,37 +77,46 @@ macro nearest_distance {
         VFMADD231PS ymm3, ymm5, ymm5
         VFMADD231PS ymm6, ymm8, ymm8
         VFMADD231PS ymm9, ymm11, ymm11
-        VADDPS ymm5, ymm1, [object.param_w+_3]
+        VBROADCASTSS ymm5, [object.param_w+12]
+        VADDPS ymm5, ymm1, ymm5
         VRSQRTPS ymm3, ymm3
         VRSQRTPS ymm6, ymm6
         VRSQRTPS ymm9, ymm9
         VRCPPS ymm3, ymm3
         VRCPPS ymm6, ymm6
         VRCPPS ymm9, ymm9
-        VMOVAPS ymm10, [object.param_w+_0]
-        VMOVAPS ymm11, [object.param_w+_1]
-        VMOVAPS ymm12, [object.param_w+_2]
+        VBROADCASTSS ymm10, [object.param_w+0]
+        VBROADCASTSS ymm11, [object.param_w+4]
+        VBROADCASTSS ymm12, [object.param_w+8]
         VSUBPS ymm3, ymm3, ymm10
         VSUBPS ymm6, ymm6, ymm11
         VSUBPS ymm9, ymm9, ymm12
         VMINPS ymm0, ymm5, ymm3
         VMINPS ymm0, ymm0, ymm6
         VMINPS ymm0, ymm0, ymm9
-        ;RET
 }
 ; in: ymm0,ymm1,ymm2 position
 ; out: ymm0 id of the nearest object
 falign
 nearest_object:
-        VSUBPS ymm3, ymm0, [object.param_x+_0]
-        VSUBPS ymm6, ymm0, [object.param_x+_1]
-        VSUBPS ymm9, ymm0, [object.param_x+_2]
-        VSUBPS ymm4, ymm1, [object.param_y+_0]
-        VSUBPS ymm7, ymm1, [object.param_y+_1]
-        VSUBPS ymm10, ymm1, [object.param_y+_2]
-        VSUBPS ymm5, ymm2, [object.param_z+_0]
-        VSUBPS ymm8, ymm2, [object.param_z+_1]
-        VSUBPS ymm11, ymm2, [object.param_z+_2]
+        VBROADCASTSS ymm3, [object.param_x+0]
+        VBROADCASTSS ymm6, [object.param_x+4]
+        VBROADCASTSS ymm9, [object.param_x+8]
+        VBROADCASTSS ymm4, [object.param_y+0]
+        VBROADCASTSS ymm7, [object.param_y+4]
+        VBROADCASTSS ymm10, [object.param_y+8]
+        VBROADCASTSS ymm5, [object.param_z+0]
+        VBROADCASTSS ymm8, [object.param_z+4]
+        VBROADCASTSS ymm11, [object.param_z+8]
+        VSUBPS ymm3, ymm0, ymm3
+        VSUBPS ymm6, ymm0, ymm6
+        VSUBPS ymm9, ymm0, ymm9
+        VSUBPS ymm4, ymm1, ymm4
+        VSUBPS ymm7, ymm1, ymm7
+        VSUBPS ymm10, ymm1, ymm10
+        VSUBPS ymm5, ymm2, ymm5
+        VSUBPS ymm8, ymm2, ymm8
+        VSUBPS ymm11, ymm2, ymm11
         VMULPS ymm3, ymm3, ymm3
         VMULPS ymm6, ymm6, ymm6
         VMULPS ymm9, ymm9, ymm9
@@ -110,16 +126,17 @@ nearest_object:
         VFMADD231PS ymm3, ymm5, ymm5
         VFMADD231PS ymm6, ymm8, ymm8
         VFMADD231PS ymm9, ymm11, ymm11
-        VADDPS ymm5, ymm1, [object.param_w+_3]       ; ymm5 = object3_distance
+        VBROADCASTSS ymm5, [object.param_w+12]
+        VADDPS ymm5, ymm1, ymm5       ; ymm5 = object3_distance
         VRSQRTPS ymm2, ymm3
         VRSQRTPS ymm3, ymm6
         VRSQRTPS ymm4, ymm9
         VRCPPS ymm2, ymm2
         VRCPPS ymm3, ymm3
         VRCPPS ymm4, ymm4
-        VMOVAPS ymm10, [object.param_w+_0]
-        VMOVAPS ymm11, [object.param_w+_1]
-        VMOVAPS ymm12, [object.param_w+_2]
+        VBROADCASTSS ymm10, [object.param_w+0]
+        VBROADCASTSS ymm11, [object.param_w+4]
+        VBROADCASTSS ymm12, [object.param_w+8]
         VMOVAPS ymm6, [object.id+_0]
         VMOVAPS ymm7, [object.id+_1]
         VMOVAPS ymm8, [object.id+_2]
@@ -555,13 +572,13 @@ update_state:
         VMOVAPS     ymm2,[k_sphere_radius]
         VMULPS      ymm0,ymm0,ymm2
         VMULPS      ymm1,ymm1,ymm2
-        VMOVAPS     [object.param_x+$020],ymm1
-        VMOVAPS     [object.param_z+$020],ymm0
+        VMOVSS      [object.param_x+4],xmm1
+        VMOVSS      [object.param_z+4],xmm0
         VXORPS      ymm2,ymm2,ymm2
         VSUBPS      ymm0,ymm2,ymm0
         VSUBPS      ymm1,ymm2,ymm1
-        VMOVAPS     [object.param_x+$040],ymm1
-        VMOVAPS     [object.param_z+$040],ymm0
+        VMOVSS     [object.param_x+8],xmm1
+        VMOVSS     [object.param_z+8],xmm0
         VBROADCASTSS ymm0,[eye_position+0]             ; ymm0 = eye x pos
         VBROADCASTSS ymm3,[eye_focus+0]
         VBROADCASTSS ymm1,[eye_position+4]             ; ymm1 = eye y pos

@@ -617,10 +617,10 @@ align 32
 align 32
   object:
   .id:      dd 8 dup 0,8 dup 8,8 dup 16,8 dup 24
-  .param_x: dd 8 dup 0.0,8 dup 0.0,8 dup 3.0,8 dup 0.0
-  .param_y: dd 8 dup 0.0,8 dup 1.0,8 dup 0.0,8 dup 1.0
-  .param_z: dd 8 dup 0.0,8 dup 3.0,8 dup 0.0,8 dup 0.0
-  .param_w: dd 8 dup 2.0,8 dup 0.7,8 dup 1.0,8 dup 2.0
+  .param_x: dd 0.0, 0.0, 3.0, 0.0
+  .param_y: dd 0.0, 1.0, 0.0, 1.0
+  .param_z: dd 0.0, 3.0, 0.0, 0.0
+  .param_w: dd 2.0, 0.7, 1.0, 2.0
   .red:     dd 8 dup 1.0,8 dup 0.0,8 dup 0.0,8 dup 0.5
   .green:   dd 8 dup 0.0,8 dup 1.0,8 dup 0.0,8 dup 0.3
   .blue:    dd 8 dup 0.0,8 dup 0.0,8 dup 1.0,8 dup 0.2

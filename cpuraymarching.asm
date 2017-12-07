@@ -124,7 +124,7 @@ local .end
   .end: }
 
 macro falign { align 32 }
-macro .calign { align 16 }
+macro .calign { align 32 }
 ;=============================================================================
 include 'cpuraymarching_image.inc'
 ;=============================================================================
@@ -602,9 +602,9 @@ align 32
   k_sphere_radius: dd 8 dup -4.0
   k_255_0: dd 8 dup 255.0
   k_0_02: dd 8 dup 0.02
-  k_hit_distance: dd 8 dup 0.00001
-  k_view_distance: dd 8 dup 50.0
-  k_normal_eps: dd 8 dup 0.00002
+  k_hit_distance: dd 8 dup 0.0002
+  k_view_distance: dd 8 dup 40.0
+  k_normal_eps: dd 8 dup 0.02
   k_shadow_hardness: dd 8 dup 16.0
 
 align 32

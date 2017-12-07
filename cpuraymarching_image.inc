@@ -49,8 +49,9 @@ sincos:
 
 ; in: ymm0,ymm1,ymm2 position
 ; out: ymm0 distance to the nearest object
-falign
-nearest_distance:
+;falign
+;nearest_distance:
+macro nearest_distance {
         VSUBPS ymm3, ymm0, [object.param_x+_0]
         VSUBPS ymm6, ymm0, [object.param_x+_1]
         VSUBPS ymm9, ymm0, [object.param_x+_2]
@@ -70,9 +71,12 @@ nearest_distance:
         VFMADD231PS ymm6, ymm8, ymm8
         VFMADD231PS ymm9, ymm11, ymm11
         VADDPS ymm5, ymm1, [object.param_w+_3]
-        VSQRTPS ymm3, ymm3
-        VSQRTPS ymm6, ymm6
-        VSQRTPS ymm9, ymm9
+        VRSQRTPS ymm3, ymm3
+        VRSQRTPS ymm6, ymm6
+        VRSQRTPS ymm9, ymm9
+        VRCPPS ymm3, ymm3
+        VRCPPS ymm6, ymm6
+        VRCPPS ymm9, ymm9
         VMOVAPS ymm10, [object.param_w+_0]
         VMOVAPS ymm11, [object.param_w+_1]
         VMOVAPS ymm12, [object.param_w+_2]
@@ -82,8 +86,8 @@ nearest_distance:
         VMINPS ymm0, ymm5, ymm3
         VMINPS ymm0, ymm0, ymm6
         VMINPS ymm0, ymm0, ymm9
-        RET
-
+        ;RET
+}
 ; in: ymm0,ymm1,ymm2 position
 ; out: ymm0 id of the nearest object
 falign
@@ -107,9 +111,12 @@ nearest_object:
         VFMADD231PS ymm6, ymm8, ymm8
         VFMADD231PS ymm9, ymm11, ymm11
         VADDPS ymm5, ymm1, [object.param_w+_3]       ; ymm5 = object3_distance
-        VSQRTPS ymm2, ymm3
-        VSQRTPS ymm3, ymm6
-        VSQRTPS ymm4, ymm9
+        VRSQRTPS ymm2, ymm3
+        VRSQRTPS ymm3, ymm6
+        VRSQRTPS ymm4, ymm9
+        VRCPPS ymm2, ymm2
+        VRCPPS ymm3, ymm3
+        VRCPPS ymm4, ymm4
         VMOVAPS ymm10, [object.param_w+_0]
         VMOVAPS ymm11, [object.param_w+_1]
         VMOVAPS ymm12, [object.param_w+_2]
@@ -130,7 +137,7 @@ nearest_object:
         VBLENDVPS ymm0, ymm8, ymm1, ymm10
         RET
 
-; in: ymm0,ymm1,ymm2 ray origin
+; in: ymm0,ymm1,ymm2 ray origin                        ; JG46-MT2JDJ8D
 ;     ymm3,ymm4,ymm5 ray direction
 ; out: ymm0 distance to the nearest object
 ;      ymm1 id of the nearest object
@@ -156,7 +163,7 @@ cast_ray:
         VMOVAPS [rsp+_7], ymm0                        ; [rsp+_7] = pos_x
         VMOVAPS [rsp+_8], ymm1                        ; [rsp+_8] = pos_y
         VMOVAPS [rsp+_9], ymm2                        ; [rsp+_9] = pos_z
-        CALL nearest_distance
+        nearest_distance
         VMOVAPS ymm6, [rsp+_6]                        ; ymm6 = distance
         VCMPLTPS ymm7, ymm0, [k_hit_distance]
         VCMPGTPS ymm8, ymm6, [k_view_distance]
@@ -212,7 +219,7 @@ cast_shadow_ray:
         VFMADD231PS ymm0, ymm6, ymm3
         VFMADD231PS ymm1, ymm6, ymm4
         VFMADD231PS ymm2, ymm6, ymm5
-        CALL nearest_distance
+        nearest_distance
         VMOVAPS ymm6, [rsp+_6]            ; ymm6 = distance
         VCMPLTPS ymm7, ymm0, [k_hit_distance]
         VCMPGTPS ymm8, ymm6, [k_view_distance]
@@ -259,32 +266,32 @@ macro calc_normal {
         VMOVAPS [rsp+_7], ymm8             ; [rsp+$0e0] = hit_pos_y+k_normal_eps
         VMOVAPS [rsp+_8], ymm9             ; [rsp+$100] = hit_pos_z-k_normal_eps
         VMOVAPS [rsp+_9], ymm10            ; [rsp+$120] = hit_pos_z+k_normal_eps
-        CALL nearest_distance               ; ymm0 = nearest_distance(x-eps,y,z)
+        nearest_distance               ; ymm0 = nearest_distance(x-eps,y,z)
         VMOVAPS ymm1, [rsp+_3]             ; ymm1 = hit_pos_y
         VMOVAPS ymm2, [rsp+_4]             ; ymm2 = hit_pos_z
         VMOVAPS [rsp+_10], ymm0             ; [rsp+$140] = nearest_distance(x-eps,y,z)
         VMOVAPS ymm0, [rsp+_5]             ; ymm0 = hit_pos_x+k_normal_eps
-        CALL nearest_distance               ; ymm0 = nearest_distance(x+eps,y,z)
+        nearest_distance               ; ymm0 = nearest_distance(x+eps,y,z)
         VMOVAPS ymm1, [rsp+_6]             ; ymm1 = hit_pos_y-k_normal_eps
         VMOVAPS ymm2, [rsp+_4]             ; ymm2 = hit_pos_z
         VMOVAPS [rsp+_11], ymm0             ; [rsp+$160] = nearest_distance(x+eps,y,z)
         VMOVAPS ymm0, [rsp+_2]             ; ymm0 = hit_pos_x
-        CALL nearest_distance               ; ymm0 = nearest_distance(x,y-eps,z)
+        nearest_distance               ; ymm0 = nearest_distance(x,y-eps,z)
         VMOVAPS ymm1, [rsp+_7]             ; ymm1 = hit_pos_y+k_normal_eps
         VMOVAPS ymm2, [rsp+_4]             ; ymm2 = hit_pos_z
         VMOVAPS [rsp+_12], ymm0             ; [rsp+$180] = nearest_distance(x,y-eps,z)
         VMOVAPS ymm0, [rsp+_2]             ; ymm0 = hit_pos_x
-        CALL nearest_distance               ; ymm0 = nearest_distance(x,y+eps,z)
+        nearest_distance               ; ymm0 = nearest_distance(x,y+eps,z)
         VMOVAPS ymm1, [rsp+_3]             ; ymm1 = hit_pos_y
         VMOVAPS ymm2, [rsp+_8]             ; ymm2 = hit_pos_z-k_normal_eps
         VMOVAPS [rsp+_13], ymm0             ; [rsp+$1a0] = nearest_distance(x,y+eps,z)
         VMOVAPS ymm0, [rsp+_2]             ; ymm0 = hit_pos_x
-        CALL nearest_distance               ; ymm0 = nearest_distance(x,y,z-eps)
+        nearest_distance               ; ymm0 = nearest_distance(x,y,z-eps)
         VMOVAPS ymm1, [rsp+_3]             ; ymm1 = hit_pos_y
         VMOVAPS ymm2, [rsp+_9]             ; ymm2 = hit_pos_z+k_normal_eps
         VMOVAPS [rsp+_14], ymm0             ; [rsp+$1c0] = nearest_distance(x,y,z-eps)
         VMOVAPS ymm0, [rsp+_2]             ; ymm0 = hit_pos_x
-        CALL nearest_distance               ; ymm0 = nearest_distance(x,y,z+eps)
+        nearest_distance               ; ymm0 = nearest_distance(x,y,z+eps)
         VSUBPS ymm2, ymm0, [rsp+_14]
         VMOVAPS ymm0, [rsp+_11]
         VMOVAPS ymm1, [rsp+_13]

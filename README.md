@@ -1,1 +1,1 @@
-# Simple real-time raymarching on the CPU in assembly
+# Real-time raymarching on the CPU

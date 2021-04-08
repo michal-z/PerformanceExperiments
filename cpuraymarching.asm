@@ -1160,7 +1160,7 @@ section '.data' data readable writeable
   k_tile_y_count = k_win_height / k_tile_height
   k_tile_count = k_tile_x_count * k_tile_y_count
 
-  k_thrd_max_count = 16
+  k_thrd_max_count = 128
 
 align 8
   bmp_handle dq 0
